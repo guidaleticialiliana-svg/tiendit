@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumen de Compra | BlueShop</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header>
+    <a href="index.html">← Seguir Comprando</a>
+    <h1>BlueShop</h1>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <h2 style="text-align:center; color:#1e5aff; margin-bottom:20px;">Resumen de tu Compra</h2>
+
+    <div id="resumen-container">
+      <!-- Aquí se cargarán dinámicamente los productos -->
+      <p style="text-align:center; color:#888;">No hay productos aún...</p>
+    </div>
+
+    <div id="envio-opciones">
+      <p>Seleccione tipo de envío:</p>
+      <label><input type="radio" name="envio" value="retiro" checked> Retiro en tienda (gratis)</label>
+      <label><input type="radio" name="envio" value="comun"> Envío común ($10)</label>
+      <label><input type="radio" name="envio" value="rapido"> Envío rápido ($4500)</label>
+    </div>
+
+    <div id="pago-opciones">
+      <p>Seleccione método de pago:</p>
+      <label><input type="radio" name="pago" value="debito" checked> Tarjeta de débito</label>
+      <label><input type="radio" name="pago" value="credito"> Tarjeta de crédito</label>
+      <label><input type="radio" name="pago" value="transferencia"> Transferencia bancaria</label>
+    </div>
+
+    <p id="total-final">Total: $0</p>
+
+    <button id="confirmar-compra">Confirmar Compra</button>
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="text-align:center; padding:20px; color:#7b8bff; font-size:0.9em;">
+    © 2025 <strong>BlueShop</strong> - Tu tienda en línea de confianza 💙
+  </footer>
+
+  <script src="resumen.js"></script>
+</body>
+</html>

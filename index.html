@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoldenBike - Tienda de Bicicletas</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body, html { font-family: 'Segoe UI', sans-serif; min-height: 100vh; }
+body {
+  background: url('golden-hd.jpeg')
+              no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: -1;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: rgba(0,119,204,0.85);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo img { width: 250px; height: 90px; border-radius: 10px; }
+.logo span { font-size: 1.6rem; font-weight: bold; color: #fff; }
+.banner { flex-grow: 1; margin-left: 20px; font-size: 1.3rem; color: #fff; text-align: center; font-weight: 600; }
+#carrito {
+  background: rgba(0,0,0,0.6);
+  padding: 10px 15px;
+  border-radius: 12px;
+  color: #fff;
+  min-width: 140px;
+  text-align: center;
+  cursor: pointer;
+}
+#carrito h3 { font-size: 1rem; margin-bottom: 5px; }
+#carrito .cantidad { font-size: 1.1rem; font-weight: 600; margin-top: 5px; }
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 20px auto;
+  gap: 20px;
+  padding: 10px;
+}
+.producto {
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  flex: 1 1 250px;
+  padding: 12px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.producto:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.4); }
+.producto img { width: 100%; border-radius: 10px; margin-bottom: 8px; }
+.producto h3 { margin: 6px 0; font-size: 1.1rem; }
+.producto span { font-weight: 700; color: #bff0ff; margin-bottom: 8px; display: block; }
+.producto select { margin-bottom: 8px; padding: 5px 8px; border-radius: 6px; border: none; }
+.producto button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(180deg,#00a6ff,#0077cc);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.producto button:hover { transform: translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.4); }
+
+/* Tooltip arriba de la imagen */
+.producto p {
+  font-size: 0.9rem;
+  opacity: 0;
+  position: absolute;
+  background: rgba(0,0,0,0.85);
+  padding: 8px;
+  border-radius: 8px;
+  color: #bff0ff;
+  bottom: 100%; /* arriba de la imagen */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 5;
+}
+.producto:hover p { opacity: 1; }
+
+@media(max-width:900px){
+  header{flex-direction:column; gap:10px;}
+  main{justify-content:center;}
+  #carrito{width:90%; margin:10px auto;}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="LOLI.png" alt="Logo">
+    <span></span>
+  </div>
+  <div class="banner">¡Bienvenido! Ofertas especiales hoy</div>
+  <div id="carrito" onclick="irAlCarrito()">
+    <h3>Carrito</h3>
+    <div class="cantidad">0 productos</div>
+  </div>
+</header>
+
+<main id="listaProductos"></main>
+
+<script>
+const productos = [
+  { nombre: "VairoMTB", precio: 130, descripcion: "Cuadro Aluminio 6061 T6, 24 velocidades, frenos a disco.", imagen: "VairoMTB.JPG" },
+  { nombre: "Shift MTB Rebel", precio: 90, descripcion: "Rodado 29, cuadro aluminio 6061, frenos a disco.", imagen: "POPOLO.JPG" },
+  { nombre: "Firebird Adventure", precio: 130.000, descripcion: "Rodado 29, Shimano Tourney, frenos mecánicos.", imagen: "caca.JPG" },
+  { nombre: "Topmega Sunshine", precio: 150.000, descripcion: "Cuadro aluminio 700x31.8mm, 21 velocidades.", imagen: "TopmegaMTB.JPG" },
+  { nombre: "PFirebird MTB", precio: 160.000, descripcion: "Rodado 29, triple plato, suspensión delantera.", imagen: "YOYO.JPG" },
+  { nombre: "Raleigh Scout", precio: 110.000, descripcion: "Rodado 24, frenos de disco mecánicos, cuadro aluminio.", imagen: "NOL.JPG" },
+  { nombre: "Lamborghini Fuoco", precio: 200, descripcion: "Rodado 29, frenos a disco, cuadro aluminio.", imagen: "WWW.JPG" },
+  { nombre: "Venzo Atix", precio: 170, descripcion: "Cuadro aluminio 6061, horquilla aire bloqueo remoto.", imagen: "DER.JPG" },
+  { nombre: "RaleUrbanaUrban", precio: 130, descripcion: "Piñón Shimano XT, frenos hidráulicos, 24v.", imagen: "polo.JPG" },
+  { nombre: "Vairo MTB Carbon", precio: 200, descripcion: "Cuadro carbono, 11v, frenos SLX BR-M7000.", imagen: "viro.JPG" },
+  { nombre: "Raleigh MTB", precio: 180, descripcion: "Frenos hidráulicos, Shimano Altus, 24 velocidades.", imagen: "pep.JPG" },
+  { nombre: "Topmega Neptune", precio: 130, descripcion: "Rodado 26, aluminio, 21 velocidades.", imagen: "titi.JPG" },
+  { nombre: "Venzo Loki Evo", precio: 120, descripcion: "29”, Shimano Tourney, 21 velocidades.", imagen: "Venzo.JPG" },
+  { nombre: "Volta Avian", precio: 100, descripcion: "Rodado 29, frenos hidráulicos Shimano MT200.", imagen: "BOLI.JPG" },
+  { nombre: "Spy Bullet R29", precio: 100, descripcion: "Cuadro aluminio, frenos disco, 21 velocidades.", imagen: "trampa.JPG" }
+];
+
+let carrito = [];
+
+function renderProductos() {
+  const contenedor = document.getElementById("listaProductos");
+  contenedor.innerHTML = "";
+  productos.forEach((p, i) => {
+    contenedor.innerHTML += `
+      <div class="producto">
+        <p>${p.descripcion}</p>
+        <img src="${p.imagen}" alt="${p.nombre}">
+        <h3>${p.nombre}</h3>
+        <span>$${p.precio}</span>
+        <label>Talle:</label>
+        <select id="talle${i}">
+          <option>XS</option><option>S</option><option selected>M</option><option>L</option><option>XL</option>
+        </select>
+        <button onclick="agregarCarrito(${i})">Agregar al carrito</button>
+      </div>
+    `;
+  });
+}
+
+function agregarCarrito(i) {
+  const talle = document.getElementById(`talle${i}`).value;
+  const producto = productos[i];
+  carrito.push({ ...producto, talle });
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+  actualizarCarrito();
+}
+
+function actualizarCarrito() {
+  const cantidadElem = document.querySelector('#carrito .cantidad');
+  cantidadElem.textContent = `${carrito.length} producto${carrito.length !== 1 ? 's' : ''}`;
+}
+
+function irAlCarrito() {
+  window.location.href = 'carrito.html';
+}
+
+window.addEventListener('load', () => {
+  renderProductos();
+  carrito = []; // Reinicia carrito a 0
+  actualizarCarrito();
+});
+</script>
+  <!-- INICIO: Botón WhatsApp flotante -->
+  <style>
+    /* Estilos del botón */
+    .whatsapp-float {
+      position: fixed;
+      right: 20px;           /* cambiar a left:20px para izquierda */
+      bottom: 20px;          /* cambiar la distancia al fondo */
+      z-index: 9999;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      background: #25D366;   /* color WhatsApp */
+      transition: transform .12s ease, box-shadow .12s ease;
+      text-decoration: none;
+    }
+    .whatsapp-float:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(0,0,0,0.22); }
+    .whatsapp-float svg { width: 26px; height: 26px; vertical-align: middle; }
+    /* Texto acompañante (opcional) */
+    .whatsapp-label {
+      position: fixed;
+      right: 88px;
+      bottom: 28px;
+      z-index: 9998;
+      background: #fff;
+      color: #111;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      display: none; /* mostrar si querés etiqueta */
+      align-items: center;
+    }
+    @media (min-width: 880px) {
+      .whatsapp-label { display: flex; } /* aparece solo en pantallas grandes */
+    }
+  </style>
+
+  <!-- Etiqueta (opcional) -->
+  <div class="whatsapp-label" id="waLabel">Chatea con nosotros</div>
+
+  <!-- Botón -->
+  <a id="whatsappBtn" class="whatsapp-float" href="#" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+    <!-- Icono SVG oficial simplificado -->
+    <svg viewBox="0 0 24 24" fill="white" aria-hidden="true" focusable="false">
+      <path d="M20.52 3.48A11.78 11.78 0 0012 .25C6.05.25 1.25 5.05 1.25 11c0 1.94.5 3.83 1.45 5.5L.25 23l6.8-2.04A11.7 11.7 0 0012 22.75c5.95 0 10.75-4.8 10.75-10.75 0-2.87-1.12-5.57-3.23-7.52zm-8.5 17.06c-1.5 0-2.95-.4-4.2-1.16l-.3-.18-4.04 1.21 1.23-3.72-.2-.38A8.8 8.8 0 013.25 11c0-4.86 3.96-8.8 8.8-8.8 2.35 0 4.55.92 6.2 2.6 1.66 1.66 2.58 3.85 2.58 6.2 0 4.84-3.94 8.8-8.8 8.8z"/>
+      <path d="M17.2 14.1c-.3-.14-1.78-.88-2.06-.98-.28-.1-.48-.14-.68.14-.2.28-.8.98-.98 1.18-.18.2-.36.22-.66.07-.3-.14-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.6.14-.14.3-.36.45-.54.15-.18.2-.3.3-.5.1-.2 0-.36-.04-.5-.04-.14-.68-1.66-.93-2.28-.24-.6-.48-.52-.68-.53-.18-.01-.4-.01-.61-.01-.2 0-.5.08-.76.36-.26.28-1 1-1 2.44s1.03 2.83 1.17 3.03c.14.2 2.02 3.1 4.9 4.35 1.98.86 2.95.93 3.98.78 1.03-.15 1.78-.84 2.03-1.66.25-.82.25-1.52.18-1.66-.07-.14-.28-.22-.58-.36z"/>
+    </svg>
+  </a>
+
+  <script>
+    (function(){
+      // CONFIGURAR: número en formato internacional SIN signos ni espacios (ej: 5491123456789 para Argentina)
+      const waNumber = "5491164664573"; // <-- reemplaza por tu número
+      // Mensaje prellenado (se codifica automáticamente)
+      const prefilledMessage = "Hola!%20Quiero%20Chatear%20con %20ventas%20sobre%20mi%20Compra."; // puedes editar aquí (usa %20 para espacios o usa encodeURIComponent)
+      // Construir URL de WhatsApp (wa.me funciona para móvil y web)
+      const waUrl = "https://wa.me/" + waNumber + "?text=" + prefilledMessage;
+
+      const btn = document.getElementById("whatsappBtn");
+      btn.href = waUrl;
+
+      // Opcional: mostrar etiqueta al pasar el mouse en móviles/PC
+      const label = document.getElementById("waLabel");
+      btn.addEventListener("mouseenter", ()=> { if(label) label.style.opacity = 1; });
+      btn.addEventListener("mouseleave", ()=> { if(label) label.style.opacity = ''; });
+
+      // Si querés codificar el mensaje automáticamente en JS en vez de escribirlo codificado:
+      // const text = "Hola! Quiero info sobre sus servicios.";
+      // btn.href = "https://wa.me/" + waNumber + "?text=" + encodeURIComponent(text);
+    })();
+  </script>
+  <!-- FIN: Botón WhatsApp flotante -->
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito de Compras</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('golden-hd.jpeg')
+        no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 119, 204, 0.85);
+      padding: 15px 20px;
+      border-bottom: 3px solid #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    header img {
+      width: 250px;
+      height: 90px;
+      border-radius: 10px;
+      margin-right: 10px;
+    }
+
+    header h1 {
+      font-size: 1.8em;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: rgba(255,255,255,0.1);
+      padding: 25px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: rgba(0,119,204,0.7);
+      font-weight: 600;
+    }
+
+    td img {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    td button {
+      background: #ff4444;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    td button:hover {
+      background: #cc0000;
+    }
+
+    .total {
+      text-align: right;
+      font-size: 1.2em;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    .botones {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .botones button {
+      background: linear-gradient(180deg, #00aaff, #0077cc);
+      border: none;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .botones button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    @media (max-width: 700px) {
+      table, th, td { font-size: 0.9em; }
+      td img { width: 60px; height: 60px; }
+      .botones { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="LOLI.png" alt="Logo">
+    <h1>Carrito de Compras - GoldenBike</h1>
+  </header>
+
+  <div class="container">
+    <table id="tablaCarrito">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Producto</th>
+          <th>Descripción</th>
+          <th>Talle</th>
+          <th>Precio</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="total">Total: $<span id="total">0</span></div>
+
+    <div class="botones">
+      <button onclick="seguirComprando()">⬅️ Seguir comprando</button>
+      <button onclick="pagar()">💳 Finalizar compra</button>
+    </div>
+  </div>
+
+  <script>
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    function mostrarCarrito() {
+      const tbody = document.querySelector('#tablaCarrito tbody');
+      tbody.innerHTML = '';
+      let total = 0;
+
+      carrito.forEach((p, i) => {
+        tbody.innerHTML += `
+          <tr>
+            <td><img src="${p.imagen}" alt="${p.nombre}"></td>
+            <td>${p.nombre}</td>
+            <td>${p.descripcion}</td>
+            <td>${p.talle}</td>
+            <td>$${p.precio}</td>
+            <td><button onclick="eliminar(${i})">X</button></td>
+          </tr>
+        `;
+        total += p.precio;
+      });
+
+      document.getElementById('total').textContent = total.toFixed(2);
+    }
+
+    function eliminar(i) {
+      carrito.splice(i, 1);
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      mostrarCarrito();
+    }
+
+    function pagar() {
+      if (carrito.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+      }
+      window.location.href = 'envio.html'; // ir al formulario de envío
+    }
+
+    function seguirComprando() {
+      window.location.href = 'index.html';
+    }
+
+    window.addEventListener('load', mostrarCarrito);
+  </script>
+</body>
+</html>

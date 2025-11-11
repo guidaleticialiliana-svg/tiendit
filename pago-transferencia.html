@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pago por Transferencia Bancaria</title>
+  <style>
+    /* === Estilos generales === */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: url('golden-hd.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      position: relative;
+    }
+
+    /* Filtro oscuro para mejor contraste */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: -1;
+    }
+
+    /* === Encabezado === */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      background: rgba(0,119,204,0.85);
+      padding: 15px 25px;
+      border-bottom: 3px solid #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    header img {
+      width: 210px;
+      height: 90px;
+      border-radius: 10px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin: 0;
+      color: #fff;
+      text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    /* === Contenedor principal === */
+    .container {
+      max-width: 520px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 35px 25px;
+      border-radius: 18px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .container:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .container h2 {
+      margin-bottom: 20px;
+      font-size: 1.6em;
+      color: #bff0ff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    /* === Información de cuenta === */
+    .account-info {
+      text-align: left;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.1);
+    }
+
+    .account-info p {
+      margin: 8px 0;
+      font-size: 1rem;
+      color: #e0e0e0;
+    }
+
+    .account-info strong {
+      color: #fff;
+    }
+
+    /* === Botón de confirmación === */
+    button {
+      background: linear-gradient(180deg, #00a6ff, #0077cc);
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    /* === Enlaces === */
+    a {
+      color: #bff0ff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* === Responsivo === */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      header h1 {
+        font-size: 1.4em;
+      }
+
+      .container {
+        margin: 30px 15px;
+        padding: 25px;
+      }
+
+      body {
+        background-attachment: scroll; /* evita errores en móviles */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado con logo y título -->
+  <header>
+    <img src="LOLI.png" alt="Logo de la empresa">
+    <h1>Pago por Transferencia Bancaria</h1>
+  </header>
+
+  <!-- Contenedor principal -->
+  <div class="container">
+    <h2>Datos para realizar la transferencia</h2>
+
+    <div class="account-info">
+      <p><strong>Banco:</strong> Banco Nación Argentina</p>
+      <p><strong>Titular de la cuenta:</strong> Tienda Online S.A.</p>
+      <p><strong>CBU:</strong> 0110599520075991234567</p>
+      <p><strong>Alias:</strong> tiendaonline.transfer</p>
+      <p><strong>CUIT:</strong> 30-12345678-9</p>
+      <p><strong>Monto a transferir:</strong> $12.600 (30% de descuento aplicado)</p>
+      <p><strong>Concepto:</strong> Pago de compra en línea</p>
+    </div>
+
+    <p>Una vez realizada la transferencia, envía el comprobante al correo: 
+      <a href="mailto:pagos@tiendaonline.com">goldenbikeventas@gmail.com</a>
+    </p>
+
+    <button onclick="confirmarPago()">Confirmar Pago</button>
+  </div>
+
+  <script>
+    function confirmarPago() {
+      alert("Gracias por su compra. Su pago será verificado dentro de las próximas 24 horas.");
+      window.location.href = "index.html"; // vuelve a la tienda
+    }
+  </script>
+
+</body>
+</html>

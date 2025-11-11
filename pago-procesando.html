@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procesando su pago...</title>
+  <link rel="stylesheet" href="pago-procesando.css">
+</head>
+<body>
+
+  <header>
+    <img src="LOLI.png" alt="Logo de la empresa">
+    <h1>Procesando su pago...</h1>
+  </header>
+
+  <div class="container">
+    <div class="spinner"></div>
+    <p>Estamos procesando su pago.<br>
+    En instantes recibirá su factura y los detalles de su compra en su correo electrónico.</p>
+  </div>
+
+  <script>
+    // Simula el proceso de verificación (3 segundos)
+    setTimeout(() => {
+      window.location.href = "index.html"; // vuelve a la tienda
+    }, 4000);
+  </script>
+
+</body>
+</html>
